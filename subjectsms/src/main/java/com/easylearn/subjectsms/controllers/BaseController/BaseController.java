@@ -1,13 +1,11 @@
 package com.easylearn.subjectsms.controllers.BaseController;
 
-import com.easylearn.subjectsms.services.base.BaseService;
 import com.easylearn.subjectsms.services.base.IBaseService;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-public class BaseController<T, R extends IBaseService<T> >  {
+public class BaseController<T,DTO, R extends IBaseService<T,DTO> >  {
 
     protected final R service;
 
@@ -16,7 +14,7 @@ public class BaseController<T, R extends IBaseService<T> >  {
     }
 
     @GetMapping
-    public List<T> get(){
+    public List<DTO> get(){
         return service.getAll();
     }
 }

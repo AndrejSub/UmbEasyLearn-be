@@ -2,7 +2,7 @@ package com.easylearn.subjectsms.collection.subjects;
 
 
 
-import com.easylearn.subjectsms.collection.Base.BasePredmet;
+import com.easylearn.subjectsms.collection.Base.BaseSubject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Document(collection = "DB1" )
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DB1 extends BasePredmet {
+public class DB1 extends BaseSubject {
 }

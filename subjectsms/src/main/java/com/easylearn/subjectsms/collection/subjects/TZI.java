@@ -3,7 +3,7 @@ package com.easylearn.subjectsms.collection.subjects;
 
 
 
-import com.easylearn.subjectsms.collection.Base.BasePredmet;
+import com.easylearn.subjectsms.collection.Base.BaseSubject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +15,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Document(collection = "TZI" )
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TZI extends BasePredmet {
+public class TZI extends BaseSubject {
 }
