@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TZIService extends BaseService<TZI, TZIDto, TZIRepository> implements ITZIService {
     public TZIService(TZIRepository repository) {
-        super(repository, TZIDto.class);
+        super(repository, TZIDto.class,TZI.class);
     }
 }

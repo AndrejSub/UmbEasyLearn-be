@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MatikaService extends BaseService<Matika, MatikaDto, MatikaRepository> implements IMatikaService {
     public MatikaService(MatikaRepository repository) {
-        super(repository, MatikaDto.class);
+        super(repository, MatikaDto.class,Matika.class);
     }
 }

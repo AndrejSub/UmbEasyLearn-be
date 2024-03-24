@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class Alg2Service extends BaseService<Alg2, Alg2Dto, Alg2Repository> implements IAlg2Service {
     public Alg2Service(Alg2Repository subjectRepository) {
-        super(subjectRepository, Alg2Dto.class);
+        super(subjectRepository, Alg2Dto.class, Alg2.class);
     }
 }

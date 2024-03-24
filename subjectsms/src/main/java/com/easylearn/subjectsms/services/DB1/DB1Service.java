@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DB1Service extends BaseService<DB1, DB1Dto, DB1Repository> implements IDB1Service {
     public DB1Service(DB1Repository repository) {
-        super(repository, DB1Dto.class);
+        super(repository, DB1Dto.class,DB1.class);
     }
 }
