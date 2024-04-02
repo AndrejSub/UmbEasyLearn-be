@@ -1,0 +1,18 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://asub:GhVPhyEQgQtO5LzE@cluster0.gjveou6.mongodb.net
+      database: Predmety
+  application:
+    name: subjectsms
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8090
+

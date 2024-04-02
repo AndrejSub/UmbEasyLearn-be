@@ -1,11 +1,12 @@
 package com.easylearn.usermicroservice.persistence;
 
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;

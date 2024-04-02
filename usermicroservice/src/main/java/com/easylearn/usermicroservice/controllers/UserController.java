@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/add")
+    @PostMapping
     public UserEntity createUser(@RequestBody UserDTO userDTO){
         System.out.println("New user was created. Username: " + userDTO.getUsername());
         return userService.createUser(userDTO);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable Long id){
         return userService.getUser(id);
     }
-    @GetMapping("/all")
+    @GetMapping
     public List<UserDTO> getAllCustomers(){
         return userService.getAllCustomers();
     }

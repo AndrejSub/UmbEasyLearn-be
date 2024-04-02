@@ -1,6 +1,5 @@
 package com.easylearn.usermicroservice.dtos;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
