@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://mpr:STYIVOme8e4I20pM@cluster0.gjveou6.mongodb.net/
+      uri: mongodb+srv://mpr:{password}@cluster0.gjveou6.mongodb.net/
       database: pouzivatel
 
 eureka:
