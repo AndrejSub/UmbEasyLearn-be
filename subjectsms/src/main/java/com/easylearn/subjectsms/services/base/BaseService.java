@@ -1,7 +1,6 @@
 package com.easylearn.subjectsms.services.base;
 
-import com.easylearn.subjectsms.collection.Base.BaseSubject;
-import com.easylearn.subjectsms.dtos.Base.BaseSubjectDto;
+
 import com.easylearn.subjectsms.helpers.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
