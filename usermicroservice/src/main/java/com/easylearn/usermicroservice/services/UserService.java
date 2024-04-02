@@ -5,9 +5,11 @@ import com.easylearn.usermicroservice.mappers.UserDTOMapper;
 import com.easylearn.usermicroservice.persistence.UserEntity;
 import com.easylearn.usermicroservice.persistence.UserRepositary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,24 +19,28 @@ public class UserService {
     UserRepositary userRepositary;
     @Autowired
     UserDTOMapper userDTOMapper;
+    @Autowired
+    MongoTemplate mongoTemplate;
     public UserService(UserRepositary userRepositary){
         this.userRepositary = userRepositary;
     }
     public UserEntity createUser(UserDTO userDTO){
-        return userRepositary.save(userDTOMapper.mapUserDTOtoEntity(userDTO));
+        Date date = new Date();
+        UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);
+        user.setCreated_at(date);
+        user.setUpdated_at(date);
+        user.setRole("user");
+        return userRepositary.save(user);
     }
-    //    TODO:???
     public UserDTO getUser(Long id){
-        Optional<UserEntity> optionalUserEntity = userRepositary.findById(id);
-        System.out.println(optionalUserEntity);
-        if(optionalUserEntity.isEmpty()){
-            System.out.println("???");
+        Optional<UserEntity> optionalUserEntity = userRepositary.findByUserId(id);
+        if (optionalUserEntity.isEmpty()){
             return null;
         }
-        UserEntity userEntity = optionalUserEntity.get();
-        return userDTOMapper.mapUserEntityToDTO(userEntity);
+        UserEntity user = optionalUserEntity.get();
+        return userDTOMapper.mapUserEntityToDTO(user);
     }
-    public List<UserDTO> getAllCustomers(){
+    public List<UserDTO> getAllUsers(){
         Iterable<UserEntity> userEntities = userRepositary.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
         for(UserEntity userEntity: userEntities){
@@ -45,5 +51,17 @@ public class UserService {
         }
         return userDTOS;
     }
-//    TODO: update, delete when findById fixed
+    public UserEntity updateUser(Long id, UserDTO userDTO){
+        userRepositary.deleteUserEntityByUserId(id);
+        UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);
+        user.setUserId(id);
+        user.setUpdated_at(new Date());
+        userRepositary.save(user);
+        return user;
+    }
+    public void deleteUser(Long id){
+        userRepositary.deleteUserEntityByUserId(id);
+    }
+
+
 }

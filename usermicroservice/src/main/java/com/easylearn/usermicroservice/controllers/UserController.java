@@ -13,19 +13,25 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-
-    @PostMapping
-    public UserEntity createUser(@RequestBody UserDTO userDTO){
-        System.out.println("New user was created. Username: " + userDTO.getUsername());
-        return userService.createUser(userDTO);
-    }
-
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable Long id){
         return userService.getUser(id);
     }
-    @GetMapping
-    public List<UserDTO> getAllCustomers(){
-        return userService.getAllCustomers();
+    @PostMapping()
+    public UserEntity createUser(@RequestBody UserDTO userDTO){
+        return userService.createUser(userDTO);
     }
+    @GetMapping()
+    public List<UserDTO> getAllUsers(){
+        return userService.getAllUsers();
+    }
+    @PutMapping("/{id}")
+    public UserEntity updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO){
+        return userService.updateUser(id, userDTO);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+    }
+
 }

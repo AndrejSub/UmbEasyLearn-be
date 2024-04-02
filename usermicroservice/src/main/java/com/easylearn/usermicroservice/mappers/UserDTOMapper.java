@@ -14,12 +14,15 @@ public class UserDTOMapper {
     private ModelMapper modelMapper;
 
     public UserDTO mapUserEntityToDTO(UserEntity userEntity) {
-        return modelMapper.map(userEntity, UserDTO.class);
+
+        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+        userDTO.setUser_id(userEntity.getUserId());
+        return userDTO;
     }
 
     public UserEntity mapUserDTOtoEntity(UserDTO userDTO){
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
-        userEntity.setUser_id(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
+        userEntity.setUserId(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
         return userEntity;
     }
 }

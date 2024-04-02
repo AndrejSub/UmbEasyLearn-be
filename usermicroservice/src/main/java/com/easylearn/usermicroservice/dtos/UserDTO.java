@@ -12,6 +12,7 @@ import java.util.Date;
 public class UserDTO {
     public Long user_id;
     public String username;
+    public String role;
     public String email;
     public String password;
     public Date created_at;
