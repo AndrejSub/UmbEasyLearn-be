@@ -21,8 +21,7 @@ public class BaseMapper<Entity ,DTO > {
 
     public Entity mapDtoToEntity(DTO dto, Class<Entity> entityClass) {
         try {
-            Entity t = modelMapper.map(dto, entityClass);
-            return t;
+            return modelMapper.map(dto, entityClass);
         }
         catch (Exception exception) {
             throw new RuntimeException(exception);

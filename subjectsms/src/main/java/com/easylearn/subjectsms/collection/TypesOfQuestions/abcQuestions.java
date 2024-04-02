@@ -1,7 +1,6 @@
 package com.easylearn.subjectsms.collection.TypesOfQuestions;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 @Data
 public class abcQuestions {

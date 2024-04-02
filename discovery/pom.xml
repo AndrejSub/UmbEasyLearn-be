@@ -7,7 +7,6 @@
 		<artifactId>UmbEasyLearn-be</artifactId>
 		<version>1.0</version>
 	</parent>
-	<groupId>com.easylearn</groupId>
 	<artifactId>discovery</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>discovery</name>

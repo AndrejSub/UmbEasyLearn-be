@@ -1,9 +1,8 @@
 package com.easylearn.subjectsms.services.TestServices;
 
 
-import com.easylearn.subjectsms.collection.Subjects;
+
 import com.easylearn.subjectsms.collection.Tests;
-import com.easylearn.subjectsms.dtos.SubjectsDto;
 import com.easylearn.subjectsms.dtos.TestsDto;
 import com.easylearn.subjectsms.helpers.BaseMapper;
 import com.easylearn.subjectsms.repository.TestsRepository;

@@ -1,20 +1,19 @@
 package com.easylearn.subjectsms.services.Subjects;
 
 import com.easylearn.subjectsms.collection.Subjects;
-import com.easylearn.subjectsms.collection.Tests;
+
 import com.easylearn.subjectsms.dtos.SubjectsDto;
-import com.easylearn.subjectsms.dtos.TestsDto;
+
 import com.easylearn.subjectsms.helpers.BaseMapper;
 import com.easylearn.subjectsms.repository.SubjectsRepository;
 import com.easylearn.subjectsms.services.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.Subject;
-import java.util.List;
+
 import java.util.UUID;
 
 @Service
