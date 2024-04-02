@@ -1,0 +1,78 @@
+
+services:
+  ## MySQL Docker Compose Config
+
+
+  ## Mongo Docker Compose Config
+  mongo:
+    container_name: mongo
+    image: mongo:4.4.14-rc0-focal
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+    volumes:
+      - ./mongo-data:/data/db
+
+  ## Zipkin
+#  zipkin:
+#    image: openzipkin/zipkin
+#    container_name: zipkin
+#    ports:
+#      - "9411:9411"
+
+  discovery-server:
+    image: andrejsuba/discovery:latest
+    container_name: discovery-server
+    pull_policy: always
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  config-server:
+    image: andrejsuba/cofig-server:latest
+    container_name: config-server
+    pull_policy: always
+    ports:
+      - "8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+
+  api-gateway:
+    image: andrejsuba/apigateway:latest
+    container_name: api-gateway
+    pull_policy: always
+    ports:
+      - "8181:8080"
+    expose:
+      - "8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+
+  ## Product-Service Docker Compose Config
+  subject-service:
+    container_name: subject-service
+    image: andrejsuba/subjectsms:latest
+    pull_policy: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongo
+      - discovery-server
+      - api-gateway
+
+  ## Order-Service Docker Compose Config
+  user-service:
+    container_name: user-service
+    image: andrejsuba/usermicroservice:latest
+    pull_policy: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - api-gateway

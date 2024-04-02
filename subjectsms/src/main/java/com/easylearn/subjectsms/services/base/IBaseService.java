@@ -11,9 +11,8 @@ public interface IBaseService<T,DTO>  {
 
     ResponseEntity<List<DTO>> getAll();
     ResponseEntity<DTO> getById(String id);
-    ResponseEntity<HttpStatus> create(DTO subjectDTO);
     ResponseEntity<HttpStatus> DeleteById(String id);
-    ResponseEntity<DTO> UpdateSubject(String id,DTO book);
+//    ResponseEntity<DTO> UpdateSubject(String id,DTO book);
 
 
 }

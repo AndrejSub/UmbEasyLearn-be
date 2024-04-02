@@ -30,20 +30,17 @@ public class BaseController<T,DTO, R extends IBaseService<T,DTO> >  {
 
     }
 
-    @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody DTO dto){
-            return this.service.create(dto);
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable String id){
         return this.service.DeleteById(id);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DTO> update(@PathVariable String id,@RequestBody DTO dto){
-        return this.service.UpdateSubject(id,dto);
-
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<DTO> update(@PathVariable String id,@RequestBody DTO dto){
+//        return this.service.UpdateSubject(id,dto);
+//
+//    }
 
 }

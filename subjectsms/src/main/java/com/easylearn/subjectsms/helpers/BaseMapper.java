@@ -20,7 +20,12 @@ public class BaseMapper<Entity ,DTO > {
     }
 
     public Entity mapDtoToEntity(DTO dto, Class<Entity> entityClass) {
-        return modelMapper.map(dto, entityClass);
+        try {
+            return modelMapper.map(dto, entityClass);
+        }
+        catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     public List<Entity> mapListDtoToListEntity(List<DTO> dtoList, Class<Entity> entityClass) {

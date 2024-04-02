@@ -1,0 +1,22 @@
+server:
+  port: 8222
+
+spring:
+  name: apigateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: subjectsms
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api/**
+        - id: usermicroservice
+          uri: http://localhost:8989
+          predicates:
+            - Path=/users/**
+eureka:
+  client:
+    register-with-eureka: false
