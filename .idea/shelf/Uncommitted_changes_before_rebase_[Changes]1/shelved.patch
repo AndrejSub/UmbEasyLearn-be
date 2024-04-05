@@ -1,0 +1,334 @@
+Index: usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.easylearn.usermicroservice.services;\r\n\r\nimport com.easylearn.usermicroservice.dtos.UserDTO;\r\nimport com.easylearn.usermicroservice.mappers.UserDTOMapper;\r\nimport com.easylearn.usermicroservice.persistence.UserEntity;\r\nimport com.easylearn.usermicroservice.persistence.UserRepositary;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.data.mongodb.core.MongoTemplate;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n@Service\r\npublic class UserService {\r\n    @Autowired\r\n    UserRepositary userRepositary;\r\n    @Autowired\r\n    UserDTOMapper userDTOMapper;\r\n    @Autowired\r\n    MongoTemplate mongoTemplate;\r\n    public UserService(UserRepositary userRepositary){\r\n        this.userRepositary = userRepositary;\r\n    }\r\n    public UserEntity createUser(UserDTO userDTO){\r\n        Date date = new Date();\r\n        UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);\r\n        user.setCreated_at(date);\r\n        user.setUpdated_at(date);\r\n        user.setRole(\"user\");\r\n        return userRepositary.save(user);\r\n    }\r\n    public UserDTO getUser(Long id){\r\n        Optional<UserEntity> optionalUserEntity = userRepositary.findByUserId(id);\r\n        if (optionalUserEntity.isEmpty()){\r\n            return null;\r\n        }\r\n        UserEntity user = optionalUserEntity.get();\r\n        return userDTOMapper.mapUserEntityToDTO(user);\r\n    }\r\n    public List<UserDTO> getAllUsers(){\r\n        Iterable<UserEntity> userEntities = userRepositary.findAll();\r\n        List<UserDTO> userDTOS = new ArrayList<>();\r\n        for(UserEntity userEntity: userEntities){\r\n            userDTOS.add(userDTOMapper.mapUserEntityToDTO(userEntity));\r\n        }\r\n        if(userDTOS.isEmpty()){\r\n            return null;\r\n        }\r\n        return userDTOS;\r\n    }\r\n    public UserEntity updateUser(Long id, UserDTO userDTO){\r\n        userRepositary.deleteUserEntityByUserId(id);\r\n        UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);\r\n        user.setUserId(id);\r\n        user.setUpdated_at(new Date());\r\n        userRepositary.save(user);\r\n        return user;\r\n    }\r\n    public void deleteUser(Long id){\r\n        userRepositary.deleteUserEntityByUserId(id);\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java b/usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java
+--- a/usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java	(revision 7367e8198706c409311423f094a811a79edb3d43)
++++ b/usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java	(date 1712323781881)
+@@ -27,6 +27,7 @@
+     public UserEntity createUser(UserDTO userDTO){
+         Date date = new Date();
+         UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);
++        user.setUserId(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
+         user.setCreated_at(date);
+         user.setUpdated_at(date);
+         user.setRole("user");
+@@ -52,16 +53,21 @@
+         return userDTOS;
+     }
+     public UserEntity updateUser(Long id, UserDTO userDTO){
++        Date date = new Date();
++        Optional<UserEntity> optionalUserEntity = userRepositary.findByUserId(id);
++        if (optionalUserEntity.isEmpty()){
++            System.out.println("NULL");
++            return null;
++        }
++        UserEntity user = optionalUserEntity.get();
+         userRepositary.deleteUserEntityByUserId(id);
+-        UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);
+-        user.setUserId(id);
+-        user.setUpdated_at(new Date());
+-        userRepositary.save(user);
+-        return user;
++        user.setUsername(userDTO.getUsername() == null ? "NOT_FOUND" : userDTO.getUsername());
++        user.setEmail(userDTO.getEmail() == null ? "NOT_FOUND" : userDTO.getEmail());
++        user.setRole("user");
++        user.setUpdated_at(date);
++        return userRepositary.save(user);
+     }
+     public void deleteUser(Long id){
+         userRepositary.deleteUserEntityByUserId(id);
+     }
+-
+-
+ }
+Index: usermicroservice/src/main/java/com/easylearn/usermicroservice/persistence/UserEntity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.easylearn.usermicroservice.persistence;\r\n\r\n\r\nimport jakarta.persistence.Id;\r\nimport jakarta.persistence.Transient;\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\nimport org.springframework.data.mongodb.core.mapping.Document;\r\nimport org.springframework.data.mongodb.core.mapping.Field;\r\n\r\nimport java.util.Date;\r\n\r\n\r\n@Data\r\n@NoArgsConstructor\r\n@AllArgsConstructor\r\n@Document(collection = \"info\")\r\npublic class UserEntity {\r\n    @Transient\r\n    public static final String SEQUENCE_NAME = \"users_sequence\";\r\n    @Id\r\n    private Long userId;\r\n    @Field\r\n    private String username;\r\n    @Field\r\n    private String role;\r\n    @Field\r\n    private String email;\r\n    @Field\r\n    private String password;\r\n    @Field\r\n    private Date created_at;\r\n    @Field\r\n    private Date updated_at;\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/usermicroservice/src/main/java/com/easylearn/usermicroservice/persistence/UserEntity.java b/usermicroservice/src/main/java/com/easylearn/usermicroservice/persistence/UserEntity.java
+--- a/usermicroservice/src/main/java/com/easylearn/usermicroservice/persistence/UserEntity.java	(revision 7367e8198706c409311423f094a811a79edb3d43)
++++ b/usermicroservice/src/main/java/com/easylearn/usermicroservice/persistence/UserEntity.java	(date 1712323781881)
+@@ -17,10 +17,10 @@
+ @AllArgsConstructor
+ @Document(collection = "info")
+ public class UserEntity {
++    @Id
++    private Long userId;
+     @Transient
+     public static final String SEQUENCE_NAME = "users_sequence";
+-    @Id
+-    private Long userId;
+     @Field
+     private String username;
+     @Field
+Index: cofig-server/src/main/resources/configurations/subjectsms.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring:\r\n  data:\r\n    mongodb:\r\n      uri: \"your url to the database\"\r\n      database: Predmety\r\n  application:\r\n    name: subjectsms\r\n\r\neureka:\r\n  instance:\r\n    hostname: localhost\r\n  client:\r\n    service-url:\r\n      defaultZone: http://localhost:8761/eureka\r\n\r\nmanagement:\r\n  tracing:\r\n    sampling:\r\n      probability: 1.0\r\n\r\nserver:\r\n  port: 8090\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/cofig-server/src/main/resources/configurations/subjectsms.yml b/cofig-server/src/main/resources/configurations/subjectsms.yml
+--- a/cofig-server/src/main/resources/configurations/subjectsms.yml	(revision 7367e8198706c409311423f094a811a79edb3d43)
++++ b/cofig-server/src/main/resources/configurations/subjectsms.yml	(date 1712323781880)
+@@ -1,7 +1,7 @@
+ spring:
+   data:
+     mongodb:
+-      uri: "your url to the database"
++      uri: mongodb+srv://mpr:STYIVOme8e4I20pM@cluster0.gjveou6.mongodb.net/
+       database: Predmety
+   application:
+     name: subjectsms
+Index: cofig-server/src/main/resources/configurations/usermicroservice.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring:\r\n  data:\r\n    mongodb:\r\n      uri: \"your url to database\"\r\n      database: pouzivatel\r\n\r\neureka:\r\n  instance:\r\n    hostname: localhost\r\n  client:\r\n    service-url:\r\n      defaultZone: http://localhost:8761/eureka\r\n\r\nmanagement:\r\n  tracing:\r\n    sampling:\r\n      probability: 1.0\r\n\r\nserver:\r\n  port: 8989\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/cofig-server/src/main/resources/configurations/usermicroservice.yml b/cofig-server/src/main/resources/configurations/usermicroservice.yml
+--- a/cofig-server/src/main/resources/configurations/usermicroservice.yml	(revision 7367e8198706c409311423f094a811a79edb3d43)
++++ b/cofig-server/src/main/resources/configurations/usermicroservice.yml	(date 1712323781880)
+@@ -1,7 +1,7 @@
+ spring:
+   data:
+     mongodb:
+-      uri: "your url to database"
++      uri: mongodb+srv://mpr:STYIVOme8e4I20pM@cluster0.gjveou6.mongodb.net/
+       database: pouzivatel
+ 
+ eureka:
+Index: usermicroservice/src/main/java/com/easylearn/usermicroservice/events/UserEntityListener.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.easylearn.usermicroservice.events;\r\n\r\nimport com.easylearn.usermicroservice.dtos.UserDTO;\r\nimport com.easylearn.usermicroservice.persistence.UserEntity;\r\nimport com.easylearn.usermicroservice.services.SequenceGeneratorService;\r\nimport org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;\r\nimport org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;\r\nimport org.springframework.stereotype.Component;\r\n\r\n@Component\r\npublic class UserEntityListener extends AbstractMongoEventListener<UserDTO> {\r\n    @Override\r\n    public void onBeforeConvert(BeforeConvertEvent<UserDTO> event){\r\n        if (event.getSource().getUser_id() < 1) {\r\n            event.getSource().setUser_id(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/usermicroservice/src/main/java/com/easylearn/usermicroservice/events/UserEntityListener.java b/usermicroservice/src/main/java/com/easylearn/usermicroservice/events/UserEntityListener.java
+--- a/usermicroservice/src/main/java/com/easylearn/usermicroservice/events/UserEntityListener.java	(revision 7367e8198706c409311423f094a811a79edb3d43)
++++ b/usermicroservice/src/main/java/com/easylearn/usermicroservice/events/UserEntityListener.java	(date 1712323781880)
+@@ -1,18 +1,18 @@
+-package com.easylearn.usermicroservice.events;
+-
+-import com.easylearn.usermicroservice.dtos.UserDTO;
+-import com.easylearn.usermicroservice.persistence.UserEntity;
+-import com.easylearn.usermicroservice.services.SequenceGeneratorService;
+-import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
+-import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
+-import org.springframework.stereotype.Component;
+-
+-@Component
+-public class UserEntityListener extends AbstractMongoEventListener<UserDTO> {
+-    @Override
+-    public void onBeforeConvert(BeforeConvertEvent<UserDTO> event){
+-        if (event.getSource().getUser_id() < 1) {
+-            event.getSource().setUser_id(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
+-        }
+-    }
+-}
++//package com.easylearn.usermicroservice.events;
++//
++//import com.easylearn.usermicroservice.dtos.UserDTO;
++//import com.easylearn.usermicroservice.persistence.UserEntity;
++//import com.easylearn.usermicroservice.services.SequenceGeneratorService;
++//import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
++//import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
++//import org.springframework.stereotype.Component;
++//
++//@Component
++//public class UserEntityListener extends AbstractMongoEventListener<UserDTO> {
++//    @Override
++//    public void onBeforeConvert(BeforeConvertEvent<UserDTO> event){
++//        if (event.getSource().getUser_id() < 1) {
++//            event.getSource().setUser_id(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
++//        }
++//    }
++//}
+Index: usermicroservice/src/main/java/com/easylearn/usermicroservice/mappers/UserDTOMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.easylearn.usermicroservice.mappers;\r\n\r\nimport com.easylearn.usermicroservice.dtos.UserDTO;\r\nimport com.easylearn.usermicroservice.persistence.UserEntity;\r\nimport com.easylearn.usermicroservice.services.SequenceGeneratorService;\r\nimport org.modelmapper.ModelMapper;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Component;\r\n\r\n@Component\r\npublic class UserDTOMapper {\r\n\r\n    @Autowired\r\n    private ModelMapper modelMapper;\r\n\r\n    public UserDTO mapUserEntityToDTO(UserEntity userEntity) {\r\n\r\n        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);\r\n        userDTO.setUser_id(userEntity.getUserId());\r\n        return userDTO;\r\n    }\r\n\r\n    public UserEntity mapUserDTOtoEntity(UserDTO userDTO){\r\n        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);\r\n        userEntity.setUserId(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));\r\n        return userEntity;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/usermicroservice/src/main/java/com/easylearn/usermicroservice/mappers/UserDTOMapper.java b/usermicroservice/src/main/java/com/easylearn/usermicroservice/mappers/UserDTOMapper.java
+--- a/usermicroservice/src/main/java/com/easylearn/usermicroservice/mappers/UserDTOMapper.java	(revision 7367e8198706c409311423f094a811a79edb3d43)
++++ b/usermicroservice/src/main/java/com/easylearn/usermicroservice/mappers/UserDTOMapper.java	(date 1712323781880)
+@@ -14,15 +14,10 @@
+     private ModelMapper modelMapper;
+ 
+     public UserDTO mapUserEntityToDTO(UserEntity userEntity) {
+-
+-        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+-        userDTO.setUser_id(userEntity.getUserId());
+-        return userDTO;
++        return modelMapper.map(userEntity, UserDTO.class);
+     }
+ 
+     public UserEntity mapUserDTOtoEntity(UserDTO userDTO){
+-        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+-        userEntity.setUserId(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
+-        return userEntity;
++        return modelMapper.map(userDTO, UserEntity.class);
+     }
+ }
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/jarRepositories.xml	
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="https://repo.maven.apache.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	
++++ b/.idea/.gitignore	
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/vcs.xml	
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/compiler.xml	
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <annotationProcessing>
++      <profile default="true" name="Default" enabled="true" />
++      <profile name="Maven default annotation processors profile" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <module name="apigateway" />
++        <module name="subjectsms" />
++        <module name="cofig-server" />
++        <module name="discovery" />
++        <module name="usermicroservice" />
++      </profile>
++    </annotationProcessing>
++  </component>
++  <component name="JavacSettings">
++    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
++      <module name="apigateway" options="-parameters" />
++      <module name="cofig-server" options="-parameters" />
++      <module name="discovery" options="-parameters" />
++      <module name="subjectsms" options="-parameters" />
++      <module name="usermicroservice" options="-parameters" />
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/misc.xml	
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++    <option name="workspaceImportForciblyTurnedOn" value="true" />
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK" />
++</project>
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/encodings.xml	
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/apigateway/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/cofig-server/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/discovery/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/subjectsms/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/usermicroservice/src/main/java" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file
