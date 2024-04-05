@@ -20,3 +20,7 @@ spring:
 eureka:
   client:
     register-with-eureka: false
+management:
+  tracing:
+    sampling:
+      probability: 1.0

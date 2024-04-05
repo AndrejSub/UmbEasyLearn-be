@@ -15,12 +15,14 @@ services:
     volumes:
       - ./mongo-data:/data/db
 
-  ## Zipkin
-#  zipkin:
-#    image: openzipkin/zipkin
-#    container_name: zipkin
-#    ports:
-#      - "9411:9411"
+  # Zipkin
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - zipkin
 
   discovery-server:
     image: andrejsuba/discovery:latest
@@ -76,3 +78,6 @@ services:
     depends_on:
       - discovery-server
       - api-gateway
+networks:
+  zipkin:
+    driver: bridge
