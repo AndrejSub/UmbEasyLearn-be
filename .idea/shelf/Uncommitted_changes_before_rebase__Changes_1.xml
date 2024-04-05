@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_rebase_[Changes]1" date="1712323782118" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before rebase [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="usermicroservice/target/classes/com/easylearn/usermicroservice/services/UserService.class" />
+    <option name="AFTER_PATH" value="usermicroservice/target/classes/com/easylearn/usermicroservice/services/UserService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/UserService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="usermicroservice/target/classes/com/easylearn/usermicroservice/mappers/UserDTOMapper.class" />
+    <option name="AFTER_PATH" value="usermicroservice/target/classes/com/easylearn/usermicroservice/mappers/UserDTOMapper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/UserDTOMapper.class" />
+  </binary>
+</changelist>
