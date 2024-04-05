@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95e511ad-2f33-45ce-8fb0-e558e415224a" name="Changes" comment="Distribute the tracings to Zipkin">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/usermicroservice/src/main/java/com/easylearn/usermicroservice/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usermicroservice/target/classes/com/easylearn/usermicroservice/services/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/usermicroservice/target/classes/com/easylearn/usermicroservice/services/UserService.class" afterDir="false" />
-    </list>
+    <list default="true" id="95e511ad-2f33-45ce-8fb0-e558e415224a" name="Changes" comment="Fixed AutoIncrement in usermsc. Fixed updatin users" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,6 +64,7 @@
     "Spring Boot.UsermicroserviceApplication.executor": "Run",
     "git-widget-placeholder": "mpr",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -246,7 +239,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Fixed getting/updating/deleting users. Added roles to userDTO" />
     <MESSAGE value="Distribute the tracings to Zipkin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Distribute the tracings to Zipkin" />
+    <MESSAGE value="Fixed AutoIncrement in usermsc. Fixed updatin users" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed AutoIncrement in usermsc. Fixed updatin users" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
