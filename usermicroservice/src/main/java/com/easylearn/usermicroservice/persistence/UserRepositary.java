@@ -8,6 +8,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepositary extends MongoRepository<UserEntity, Long> {
     Optional<UserEntity> findByUserId(Long id);
+    Optional<UserEntity> findByEmail(String email);
     void deleteUserEntityByUserId(Long id);
 
 }

@@ -3,3 +3,6 @@ spring:
     name: usermicroservice
   config:
     import: optional:configserver:http://localhost:8888
+#  Do we need this?
+  main:
+    allow-bean-definition-overriding: true
