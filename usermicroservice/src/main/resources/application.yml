@@ -3,6 +3,8 @@ spring:
     name: usermicroservice
   config:
     import: optional:configserver:http://localhost:8888
-#  Do we need this?
-  main:
-    allow-bean-definition-overriding: true
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+# Get en error with this type of solution
+#  main:
+#    allow-bean-definition-overriding: true
