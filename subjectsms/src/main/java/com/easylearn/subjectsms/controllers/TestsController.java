@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping ("/api/tests")
+@CrossOrigin
 public class TestsController extends BaseController<Tests, TestsDto, ITestService> {
     ITestService service;
     public TestsController(ITestService service) {
