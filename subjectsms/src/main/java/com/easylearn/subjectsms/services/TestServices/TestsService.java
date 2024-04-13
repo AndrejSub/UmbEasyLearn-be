@@ -1,7 +1,6 @@
 package com.easylearn.subjectsms.services.TestServices;
 
 
-
 import com.easylearn.subjectsms.collection.Tests;
 import com.easylearn.subjectsms.dtos.TestsDto;
 import com.easylearn.subjectsms.helpers.BaseMapper;
@@ -40,5 +39,9 @@ public class TestsService extends BaseService<Tests, TestsDto, TestsRepository> 
         }catch (Exception exception) {
             return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @Override
+    public List<TestsDto> getTestByTestId(UUID id) {
+        return mapper.mapListEntityToListDto(this.repository.findByTestID(id.toString()), TestsDto.class);
     }
 }

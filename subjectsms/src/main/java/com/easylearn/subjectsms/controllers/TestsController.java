@@ -24,6 +24,11 @@ public class TestsController extends BaseController<Tests, TestsDto, ITestServic
         return service.getTestsBySubjectId(id);
     }
 
+    @GetMapping("/TID={id}")
+    public List<TestsDto> getByTestId(@PathVariable UUID id){
+        return service.getTestByTestId(id);
+    }
+
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody TestsDto dto){
         return this.service.create(dto);
