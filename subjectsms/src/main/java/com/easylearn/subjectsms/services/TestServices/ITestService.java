@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface ITestService extends IBaseService<Tests, TestsDto> {
     List<TestsDto> getTestsBySubjectId(UUID id);
     ResponseEntity<HttpStatus> create(TestsDto testsDTO);
+    List<TestsDto> getTestByTestId(UUID id);
 }
