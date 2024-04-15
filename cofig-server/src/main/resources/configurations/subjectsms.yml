@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://mpr:STYIVOme8e4I20pM@cluster0.gjveou6.mongodb.net/
+      uri: mongodb+srv://asub:GhVPhyEQgQtO5LzE@cluster0.gjveou6.mongodb.net
       database: Predmety
   application:
     name: subjectsms

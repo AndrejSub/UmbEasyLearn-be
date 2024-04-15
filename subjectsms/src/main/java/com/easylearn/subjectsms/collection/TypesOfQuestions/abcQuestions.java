@@ -3,7 +3,7 @@ package com.easylearn.subjectsms.collection.TypesOfQuestions;
 import lombok.Data;
 
 @Data
-public class abcQuestions {
+public class AbcQuestions {
     private String questionID;
     private String a;
     private String b;
