@@ -3,7 +3,7 @@ package com.easylearn.subjectsms.dtos;
 import com.easylearn.subjectsms.collection.TypesOfQuestions.FlashCards;
 import com.easylearn.subjectsms.collection.TypesOfQuestions.PracticalQuestions;
 import com.easylearn.subjectsms.collection.TypesOfQuestions.TextQuestions;
-import com.easylearn.subjectsms.collection.TypesOfQuestions.abcQuestions;
+import com.easylearn.subjectsms.collection.TypesOfQuestions.AbcQuestions;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +22,5 @@ public class TestsDto {
     private List<FlashCards> flashCards;
     private List<TextQuestions> textQuestions;
     private List<PracticalQuestions> practicalQuestions;
-    private List<abcQuestions> abcQuestions;
+    private List<AbcQuestions> abcQuestions;
 }
