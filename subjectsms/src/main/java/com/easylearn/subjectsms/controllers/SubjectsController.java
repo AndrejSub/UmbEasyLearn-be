@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/subjects")
-@CrossOrigin
 public class SubjectsController extends BaseController<Subjects, SubjectsDto, SubjectsService> {
     private final SubjectsService service;
     public SubjectsController(SubjectsService service) {
