@@ -21,8 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-         http.cors(AbstractHttpConfigurer::disable)
-                 .csrf(AbstractHttpConfigurer::disable)
+         http.csrf(AbstractHttpConfigurer::disable)
                  .authorizeHttpRequests(
                         authorize -> authorize.requestMatchers(
                                 "/auth/register", "/auth/token", "/auth/validate")
