@@ -2,6 +2,7 @@ package com.easylearn.identityservice.controller;
 
 import com.easylearn.identityservice.entity.Token;
 import com.easylearn.identityservice.entity.UserInfo;
+import com.easylearn.identityservice.entity.IsValid;
 import com.easylearn.identityservice.services.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,9 +42,15 @@ public class AuthController {
         }
     }
     @GetMapping("/validate")
-    public String validateToken(@RequestParam("token") String token){
-         service.validateToken(token);
-         return "token is valid";
+    public IsValid validateToken(@RequestParam("token") String token){
+        try {
+            service.validateToken(token);
+            IsValid isValid = new IsValid();
+            isValid.setValid(true);
+            return isValid;
+        } catch (Exception e) {
+           return new IsValid();
+        }
     }
 
 
