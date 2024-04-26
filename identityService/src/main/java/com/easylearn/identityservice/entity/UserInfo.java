@@ -17,7 +17,7 @@ public class UserInfo {
     @Id
     private String _id;
 
-    private Long userId;
+    private String userId;
 
     private String username;
 

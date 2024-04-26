@@ -4,6 +4,7 @@ import com.easylearn.identityservice.entity.Token;
 import com.easylearn.identityservice.entity.UserInfo;
 import com.easylearn.identityservice.entity.IsValid;
 import com.easylearn.identityservice.services.AuthService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String addNewUser(@RequestBody UserInfo user){
+    public ResponseEntity addNewUser(@RequestBody UserInfo user){
         return service.saveUser(user);
     }
 
