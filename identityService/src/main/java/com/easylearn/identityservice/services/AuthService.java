@@ -2,8 +2,12 @@ package com.easylearn.identityservice.services;
 
 import com.easylearn.identityservice.entity.UserInfo;
 import com.easylearn.identityservice.repository.UserInfoRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -22,10 +26,16 @@ public class AuthService {
     }
 
 
-    public String saveUser(UserInfo info){
+    public ResponseEntity saveUser(UserInfo info){
         info.setPassword(passwordEncoder.encode(info.getPassword()));
-        userInfoRepository.save(info);
-        return "User Added";
+        UserInfo user =userInfoRepository.findByEmail(info.getEmail()).orElse(null);
+        if(user == null) {
+            info.setUserId(UUID.randomUUID().toString());
+            userInfoRepository.save(info);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public String generateToken(String username){
