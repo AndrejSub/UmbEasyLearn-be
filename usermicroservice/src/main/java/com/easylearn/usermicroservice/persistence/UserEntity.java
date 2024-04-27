@@ -30,10 +30,9 @@ public class UserEntity {
     @Field
     private String password;
     @Field
-    private Date created_at;
+    private String created_at;
     @Field
-    private Date updated_at;
+    private String updated_at;
     @Field
     private String avatar;
-
 }

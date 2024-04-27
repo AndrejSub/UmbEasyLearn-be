@@ -15,7 +15,7 @@ public class UserDTO {
     public String role;
     public String email;
     public String password;
-    public Date created_at;
-    public Date updated_at;
+    public String created_at;
+    public String updated_at;
     public String avatar;
 }

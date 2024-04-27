@@ -28,7 +28,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
             if (validator.isSecured.test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     // Return 401 Unauthorized status code if authorization header is missing
-                    exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     return exchange.getResponse().setComplete();
                 }
                 String autheader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);

@@ -13,13 +13,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-//    @GetMapping("/{id}")
-//    public UserDTO getUserById(@PathVariable String id){
-//        return userService.getUser(id);
-//    }
-    @GetMapping("/{email}")
-    public UserDTO getUserByEmail(@PathVariable String email){
-        return userService.getUserByEmail(email);
+    @GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable String id){
+        return userService.getUser(id);
     }
     @PostMapping()
     public UserEntity createUser(@RequestBody UserDTO userDTO){
@@ -37,8 +33,9 @@ public class UserController {
     public void deleteUser(@PathVariable String id){
         userService.deleteUser(id);
     }
-//    @PatchMapping("/{email}")
-//    public void changeUserPhoto(@PathVariable String email, @RequestBody UserDTO userDTO){
-//        this.userService.updateUserPhoto(email, userDTO);
-//    }
+    @DeleteMapping("/email={email}")
+    public void deleteUserbyEmail(@PathVariable String email){
+        userService.deleteUserbyEmail(email);
+    }
+
 }

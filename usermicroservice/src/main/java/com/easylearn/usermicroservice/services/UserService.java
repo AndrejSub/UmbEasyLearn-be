@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +24,7 @@ public class UserService {
         this.userRepositary = userRepositary;
     }
     public UserEntity createUser(UserDTO userDTO){
-        Date date = new Date();
         UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);
-        user.setCreated_at(date);
-        user.setUpdated_at(date);
         user.setRole("user");
         return userRepositary.save(user);
     }
@@ -71,7 +67,6 @@ public class UserService {
         userRepositary.save(user);
     }
     public UserEntity updateUser(String id, UserDTO userDTO){
-        Date date = new Date();
         Optional<UserEntity> optionalUserEntity = userRepositary.findByUserId(id);
         if (optionalUserEntity.isEmpty()){
             System.out.println("NULL");
@@ -82,10 +77,12 @@ public class UserService {
         user.setUsername(userDTO.getUsername() == null ? "NOT_FOUND" : userDTO.getUsername());
         user.setEmail(userDTO.getEmail() == null ? "NOT_FOUND" : userDTO.getEmail());
         user.setRole("user");
-        user.setUpdated_at(date);
         return userRepositary.save(user);
     }
     public void deleteUser(String id){
         userRepositary.deleteUserEntityByUserId(id);
+    }
+    public void deleteUserbyEmail(String email){
+        userRepositary.deleteUserEntityByEmail(email);
     }
 }
