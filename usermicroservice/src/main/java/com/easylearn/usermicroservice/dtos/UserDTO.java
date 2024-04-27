@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +17,5 @@ public class UserDTO {
     public String password;
     public String created_at;
     public String updated_at;
+    public String avatar;
 }

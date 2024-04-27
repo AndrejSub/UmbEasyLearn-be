@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Date;
 
 
 @Data
@@ -32,5 +33,6 @@ public class UserEntity {
     private String created_at;
     @Field
     private String updated_at;
-
+    @Field
+    private String avatar;
 }
