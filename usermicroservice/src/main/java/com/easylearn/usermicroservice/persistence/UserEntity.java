@@ -20,7 +20,7 @@ public class UserEntity {
     @Transient
     public static final String SEQUENCE_NAME = "users_sequence";
     @Id
-    private Long userId;
+    private String userId;
     @Field
     private String username;
     @Field

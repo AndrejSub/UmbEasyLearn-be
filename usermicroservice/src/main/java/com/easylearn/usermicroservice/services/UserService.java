@@ -27,13 +27,12 @@ public class UserService {
     public UserEntity createUser(UserDTO userDTO){
         Date date = new Date();
         UserEntity user = userDTOMapper.mapUserDTOtoEntity(userDTO);
-        user.setUserId(SequenceGeneratorService.generateSequence(UserEntity.SEQUENCE_NAME));
         user.setCreated_at(date);
         user.setUpdated_at(date);
         user.setRole("user");
         return userRepositary.save(user);
     }
-    public UserDTO getUser(Long id){
+    public UserDTO getUser(String id){
         Optional<UserEntity> optionalUserEntity = userRepositary.findByUserId(id);
         if (optionalUserEntity.isEmpty()){
             return null;
@@ -52,7 +51,7 @@ public class UserService {
         }
         return userDTOS;
     }
-    public UserEntity updateUser(Long id, UserDTO userDTO){
+    public UserEntity updateUser(String id, UserDTO userDTO){
         Date date = new Date();
         Optional<UserEntity> optionalUserEntity = userRepositary.findByUserId(id);
         if (optionalUserEntity.isEmpty()){
@@ -67,7 +66,7 @@ public class UserService {
         user.setUpdated_at(date);
         return userRepositary.save(user);
     }
-    public void deleteUser(Long id){
+    public void deleteUser(String id){
         userRepositary.deleteUserEntityByUserId(id);
     }
 }
