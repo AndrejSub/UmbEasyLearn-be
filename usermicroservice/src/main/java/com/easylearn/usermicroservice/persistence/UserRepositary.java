@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepositary extends MongoRepository<UserEntity, Long> {
-    Optional<UserEntity> findByUserId(Long id);
-    void deleteUserEntityByUserId(Long id);
+public interface UserRepositary extends MongoRepository<UserEntity, String> {
+    Optional<UserEntity> findByUserId(String id);
+    void deleteUserEntityByUserId(String id);
 
 }

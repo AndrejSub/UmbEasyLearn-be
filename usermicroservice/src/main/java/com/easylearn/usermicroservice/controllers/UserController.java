@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     UserService userService;
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id){
+    public UserDTO getUserById(@PathVariable String id){
         return userService.getUser(id);
     }
     @PostMapping()
@@ -26,11 +26,11 @@ public class UserController {
         return userService.getAllUsers();
     }
     @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO){
+    public UserEntity updateUser(@PathVariable String id, @RequestBody UserDTO userDTO){
         return userService.updateUser(id, userDTO);
     }
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id){
+    public void deleteUser(@PathVariable String id){
         userService.deleteUser(id);
     }
 
