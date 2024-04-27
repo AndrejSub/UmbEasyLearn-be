@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
 @Data
 @Builder
 @Document(collection = "info" )
@@ -27,8 +26,8 @@ public class UserInfo {
 
     private String password;
 
-    private Date created_at;
+    private String created_at;
 
-    private Date updated_at;
+    private String updated_at;
 
 }

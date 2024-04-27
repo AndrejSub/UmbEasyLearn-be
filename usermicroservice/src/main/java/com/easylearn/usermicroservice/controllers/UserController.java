@@ -17,6 +17,7 @@ public class UserController {
     public UserDTO getUserById(@PathVariable String id){
         return userService.getUser(id);
     }
+
     @PostMapping()
     public UserEntity createUser(@RequestBody UserDTO userDTO){
         return userService.createUser(userDTO);
@@ -32,6 +33,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable String id){
         userService.deleteUser(id);
+    }
+
+    @DeleteMapping("/email={email}")
+    public void deleteUserbyEmail(@PathVariable String email){
+        userService.deleteUserbyEmail(email);
     }
 
 }
