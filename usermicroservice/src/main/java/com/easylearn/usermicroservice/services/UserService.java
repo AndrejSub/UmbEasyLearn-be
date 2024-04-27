@@ -40,6 +40,14 @@ public class UserService {
         UserEntity user = optionalUserEntity.get();
         return userDTOMapper.mapUserEntityToDTO(user);
     }
+    public UserDTO getUserByEmail(String email){
+        Optional<UserEntity> optionalUserEntity = userRepositary.findByEmail(email);
+        if (optionalUserEntity.isEmpty()){
+            return null;
+        }
+        UserEntity user = optionalUserEntity.get();
+        return userDTOMapper.mapUserEntityToDTO(user);
+    }
     public List<UserDTO> getAllUsers(){
         Iterable<UserEntity> userEntities = userRepositary.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
@@ -50,6 +58,17 @@ public class UserService {
             return null;
         }
         return userDTOS;
+    }
+    public void updateUserPhoto(String email, UserDTO userDTO){
+        Date date = new Date();
+        Optional<UserEntity> optionalUserEntity = userRepositary.findByEmail(email);
+        if(optionalUserEntity.isEmpty()){
+            System.out.println("NULL");
+        }
+        UserEntity user = optionalUserEntity.get();
+        user.setAvatar(userDTO.getAvatar());
+//        user.setUpdated_at(date);
+        userRepositary.save(user);
     }
     public UserEntity updateUser(String id, UserDTO userDTO){
         Date date = new Date();

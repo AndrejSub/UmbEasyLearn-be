@@ -31,4 +31,5 @@ public class UserInfo {
 
     private Date updated_at;
 
+    private String avatar;
 }

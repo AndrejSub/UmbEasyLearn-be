@@ -33,5 +33,7 @@ public class UserEntity {
     private Date created_at;
     @Field
     private Date updated_at;
+    @Field
+    private String avatar;
 
 }

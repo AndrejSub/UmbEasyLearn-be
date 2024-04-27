@@ -17,4 +17,5 @@ public class UserDTO {
     public String password;
     public Date created_at;
     public Date updated_at;
+    public String avatar;
 }
