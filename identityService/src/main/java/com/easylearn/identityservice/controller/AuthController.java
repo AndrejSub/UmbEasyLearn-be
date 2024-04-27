@@ -42,6 +42,11 @@ public class AuthController {
             throw new RuntimeException("Authentication failed");
         }
     }
+    @PostMapping("/changepassword")
+    public ResponseEntity changePassword(@RequestBody UserInfo authRequest){
+       return this.service.changePassword(authRequest);
+
+    }
     @GetMapping("/validate")
     public IsValid validateToken(@RequestParam("token") String token){
         try {
