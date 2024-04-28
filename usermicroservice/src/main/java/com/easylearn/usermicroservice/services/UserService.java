@@ -56,14 +56,13 @@ public class UserService {
         return userDTOS;
     }
     public void updateUserPhoto(String email, UserDTO userDTO){
-        Date date = new Date();
         Optional<UserEntity> optionalUserEntity = userRepositary.findByEmail(email);
         if(optionalUserEntity.isEmpty()){
             System.out.println("NULL");
         }
         UserEntity user = optionalUserEntity.get();
+        System.out.println(user);
         user.setAvatar(userDTO.getAvatar());
-//        user.setUpdated_at(date);
         userRepositary.save(user);
     }
     public UserEntity updateUser(String id, UserDTO userDTO){
@@ -79,10 +78,22 @@ public class UserService {
         user.setRole("user");
         return userRepositary.save(user);
     }
+    public Long upadateUserByPost(UserEntity info){
+        UserEntity user = this.getUserInfoByEmail(info.getEmail());
+        if(user.getEmail() == null){
+            return 2L;
+        }
+        user.setAvatar(info.getAvatar());
+        userRepositary.save(user);
+        return 1L;
+    }
     public void deleteUser(String id){
         userRepositary.deleteUserEntityByUserId(id);
     }
     public void deleteUserbyEmail(String email){
         userRepositary.deleteUserEntityByEmail(email);
+    }
+    public UserEntity getUserInfoByEmail(String email){
+        return userRepositary.findByEmail(email).orElse(null);
     }
 }

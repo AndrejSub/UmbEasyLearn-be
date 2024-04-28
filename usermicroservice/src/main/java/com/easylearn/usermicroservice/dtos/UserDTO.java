@@ -10,6 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    public String _id;
     public String userId;
     public String username;
     public String role;
