@@ -30,8 +30,8 @@ spring:
           uri: http://localhost:8989
           predicates:
             - Path=/users/**
-          filters:
-            - AuthenticationFilter
+#          filters:
+#            - AuthenticationFilter
         - id: identityservice
           uri: http://localhost:8889
           predicates:
