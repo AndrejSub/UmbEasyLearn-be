@@ -17,4 +17,5 @@ public class TestsHistoryDto {
     String testName;
     String subjectName;
     String correctAnswers;
+    String questionsCount;
 }
