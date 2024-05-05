@@ -20,4 +20,5 @@ public class TestsHistory {
     String subjectName;
     String creationTime;
     String correctAnswers;
+    String questionsCount;
 }
