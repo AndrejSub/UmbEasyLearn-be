@@ -19,4 +19,5 @@ public class TestsHistory {
     String testName;
     String subjectName;
     String creationTime;
+    String correctAnswers;
 }

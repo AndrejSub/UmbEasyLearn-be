@@ -16,4 +16,5 @@ public class TestsHistoryDto {
     String subjectId;
     String testName;
     String subjectName;
+    String correctAnswers;
 }
