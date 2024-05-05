@@ -29,8 +29,10 @@ public class BaseController<T,DTO, R extends IBaseService<T,DTO> >  {
         return this.service.getById(id);
 
     }
-
-
+    @PostMapping
+    public ResponseEntity<HttpStatus> create(@RequestBody DTO dto){
+        return this.service.create(dto);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable String id){

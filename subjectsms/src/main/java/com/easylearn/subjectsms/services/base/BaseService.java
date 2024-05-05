@@ -61,6 +61,16 @@ public  class BaseService<T, DTO, R extends MongoRepository<T, String>> implemen
         }
     }
 
+    @Override
+    public ResponseEntity<HttpStatus> create(DTO dto) {
+        try {
+            this.repository.save(mapper.mapDtoToEntity(dto, entityClass));
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception exception){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 //    @Override
 //    public ResponseEntity<DTO> UpdateSubject(String id, DTO subjectDTO) {
 //        T subject = this.repository.findById(id).orElse(null);

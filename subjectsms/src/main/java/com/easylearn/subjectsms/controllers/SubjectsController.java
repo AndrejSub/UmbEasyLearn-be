@@ -5,8 +5,6 @@ import com.easylearn.subjectsms.controllers.BaseController.BaseController;
 import com.easylearn.subjectsms.dtos.SubjectsDto;
 
 import com.easylearn.subjectsms.services.Subjects.SubjectsService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
@@ -24,8 +22,8 @@ public class SubjectsController extends BaseController<Subjects, SubjectsDto, Su
         return service.findBySubjectID(id);
     }
 
-    @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody SubjectsDto dto){
-        return this.service.create(dto);
-    }
+//    @PostMapping
+//    public ResponseEntity<HttpStatus> create(@RequestBody SubjectsDto dto){
+//        return this.service.create(dto);
+//    }
 }
