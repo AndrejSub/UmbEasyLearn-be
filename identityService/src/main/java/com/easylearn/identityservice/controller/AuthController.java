@@ -34,8 +34,9 @@ public class AuthController {
                     authRequest.getEmail(),
                     authRequest.getPassword()));
         if(authentication.isAuthenticated()) {
+
             Token token = new Token();
-             token.setToken(service.generateToken(authRequest.getEmail()));
+             token.setToken(service.generateToken(authRequest.getEmail(),service.getRoleByEmail(authRequest.getEmail())));
              token.setResult(true);
            return token;
         } else {
