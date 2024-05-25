@@ -4,9 +4,12 @@ import com.easylearn.identityservice.entity.UserInfo;
 import com.easylearn.identityservice.repository.UserInfoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SignatureException;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -40,20 +43,28 @@ public class AuthService {
         }
     }
 
-    public ResponseEntity changePassword(UserInfo info){
-        try {
-            UserInfo user = this.getUserInfoByEmail(info.getEmail());
-            if(user.getEmail() == null){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity changePassword(UserInfo info,String authHeader) throws SignatureException {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            authHeader = authHeader.substring(7);
+
+            if (Objects.equals(info.getEmail(), jwtService.extractEmail(authHeader))) {
+                try {
+
+                    UserInfo user = this.getUserInfoByEmail(info.getEmail());
+                    if (user.getEmail() == null) {
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    }
+                    user.setPassword(passwordEncoder.encode(info.getPassword()));
+                    userInfoRepository.save(user);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } catch (Exception exception) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
-            user.setPassword(passwordEncoder.encode(info.getPassword()));
-            userInfoRepository.save(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception exception){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
-
     }
     public String getRoleByEmail(String email){
         UserInfo user =  userInfoRepository.findByEmail(email).orElse(null);
@@ -73,6 +84,11 @@ public class AuthService {
 
     public void validateToken(String token){
         jwtService.validateToken(token);
+    }
+
+
+    public String getEmail(String token) throws SignatureException {
+        return jwtService.extractEmail(token);
     }
 
 
