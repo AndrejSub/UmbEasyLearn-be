@@ -4,11 +4,14 @@ import com.easylearn.identityservice.entity.Token;
 import com.easylearn.identityservice.entity.UserInfo;
 import com.easylearn.identityservice.entity.IsValid;
 import com.easylearn.identityservice.services.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.SignatureException;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,8 +47,9 @@ public class AuthController {
         }
     }
     @PostMapping("/changepassword")
-    public ResponseEntity changePassword(@RequestBody UserInfo authRequest){
-       return this.service.changePassword(authRequest);
+    public ResponseEntity changePassword(@RequestBody UserInfo authRequest, HttpServletRequest request) throws SignatureException {
+        String authHeader = request.getHeader("Authorization");
+       return this.service.changePassword(authRequest, authHeader);
 
     }
     @GetMapping("/validate")
