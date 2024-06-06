@@ -23,8 +23,6 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         super(Config.class);
     }
 
-//    @Autowired
-//    private RestTemplate template;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -74,7 +72,6 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 }
 
                 try {
-                    // template.getForObject("http://localhost:6666/auth/validate?token"+autheader,String.class);
                     jwtUtil.validateToken(autheader);
                 } catch (Exception e) {
                     System.out.println("invalid access...!");
