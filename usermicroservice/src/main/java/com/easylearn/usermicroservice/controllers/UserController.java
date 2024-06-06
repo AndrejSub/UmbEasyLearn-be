@@ -18,18 +18,12 @@ public class UserController {
     public UserDTO getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
     }
-//    @PostMapping()
-//    public UserEntity createUser(@RequestBody UserDTO userDTO){
-//        return userService.createUser(userDTO);
-//    }
+
     @GetMapping()
     public List<UserDTO> getAllUsers(){
         return userService.getAllUsers();
     }
-//    @PutMapping("/{id}")
-//    public UserEntity updateUser(@PathVariable String id, @RequestBody UserDTO userDTO){
-//        return userService.updateUser(id, userDTO);
-//    }
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable String id){
         userService.deleteUser(id);
@@ -38,11 +32,7 @@ public class UserController {
     public void deleteUserbyEmail(@PathVariable String email){
         userService.deleteUserbyEmail(email);
     }
-//    @PatchMapping("/{email}")
-//    public void updateUserPhoto(@PathVariable String email, @RequestBody UserDTO userDTO){
-//        System.out.println("zmenil som");
-//        userService.updateUserPhoto(email, userDTO);
-//    }
+
     @PostMapping("/update")
     public Long changePhoto(@RequestBody UserEntity userEntity){
         return this.userService.upadateUserByPost(userEntity);

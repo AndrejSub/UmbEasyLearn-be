@@ -2,10 +2,6 @@ spring:
   application:
     name: identityservice
 
-#  config:
-#    import: optional:configserver:http://localhost:8888
-
-
   data:
     mongodb:
       uri: mongodb+srv://asub:GhVPhyEQgQtO5LzE@cluster0.gjveou6.mongodb.net
@@ -17,10 +13,6 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0
 
 
 server:

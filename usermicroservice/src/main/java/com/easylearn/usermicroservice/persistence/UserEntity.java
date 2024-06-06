@@ -17,8 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Document(collection = "info")
 public class UserEntity {
-//    @Transient
-//    public static final String SEQUENCE_NAME = "users_sequence";
+
     @Id
     private String _id;
     @Id

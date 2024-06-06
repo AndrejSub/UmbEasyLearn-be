@@ -1,8 +1,6 @@
 package com.easylearn.identityservice.entity;
 
-import com.easylearn.identityservice.enums.Role;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +21,6 @@ public class UserInfo {
 
     private String username;
 
-//    @Enumerated(EnumType.STRING)
     private String role;
 
     private String email;
