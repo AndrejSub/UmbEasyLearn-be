@@ -1,7 +1,8 @@
 spring:
   data:
     mongodb:
-      uri: "Mongo connection String"
+#      safe connection to demo database
+      uri: mongodb+srv://mykyprykhodko:QByVvtSvWepPDwHf@umbeasylearn.syb9ryg.mongodb.net/
       database: Predmety
   application:
     name: subjectsms
