@@ -8,10 +8,10 @@ spring:
       database: pouzivatel
 eureka:
   instance:
-    hostname: localhost
+    hostname: discovery-mcs
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-mcs:8761/eureka
 
 
 

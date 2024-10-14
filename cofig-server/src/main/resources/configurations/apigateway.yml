@@ -11,7 +11,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:4200"
+            allowedOrigins: "http://frontend:4200"
             allowedHeaders: "*"
             allowedMethods:
               - GET
@@ -21,19 +21,19 @@ spring:
               - PUT
       routes:
         - id: subjectsms
-          uri: http://localhost:8090
+          uri: http://subject-mcs:8090
           predicates:
             - Path=/api/**
           filters:
             - AuthenticationFilter
         - id: usermicroservice
-          uri: http://localhost:8989
+          uri: http://user-mcs:8989
           predicates:
             - Path=/users/**
           filters:
             - AuthenticationFilter
         - id: identityservice
-          uri: http://localhost:8889
+          uri: http://identity-service:8889
           predicates:
             - Path=/auth/**
           filters:
@@ -44,7 +44,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone : http://localhost:8761/eureka/
+      defaultZone : http://discovery-mcs:8761/eureka/
 
 management:
   tracing:

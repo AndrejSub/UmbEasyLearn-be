@@ -1,83 +1,107 @@
-
+version: '3.8'
 services:
-  ## MySQL Docker Compose Config
 
-
-  ## Mongo Docker Compose Config
-  mongo:
-    container_name: mongo
-    image: mongo:4.4.14-rc0-focal
-    restart: unless-stopped
+  config-mcs:
+    image: config-mcs:latest
+    build:
+      context: .
+      dockerfile: ./cofig-server/Dockerfile
+    container_name: config-mcs
     ports:
-      - "27017:27017"
-    expose:
-      - "27017"
-    volumes:
-      - ./mongo-data:/data/db
-
-  # Zipkin
-  zipkin:
-    container_name: zipkin
-    image: openzipkin/zipkin
-    ports:
-      - "9411:9411"
+      - "8888:8888"
     networks:
-      - zipkin
+      - microservice-network
 
-  discovery-server:
-    image: andrejsuba/discovery:latest
-    container_name: discovery-server
-    pull_policy: always
+  discovery-mcs:
+    image: discovery-mcs:latest
+    build:
+      context: .
+      dockerfile: ./discovery/Dockerfile
+    container_name: discovery-mcs
+    depends_on:
+      - config-mcs
     ports:
       - "8761:8761"
+    networks:
+      - microservice-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-mcs:8761/eureka/
 
-  config-server:
-    image: andrejsuba/cofig-server:latest
-    container_name: config-server
-    pull_policy: always
+  apigateway:
+    image: apigateway:latest
+    build:
+      context: .
+      dockerfile: ./apigateway/Dockerfile
+    container_name: apigateway
+    depends_on:
+      - discovery-mcs
     ports:
-      - "8888"
+      - "8222:8222"
+    networks:
+      - microservice-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-mcs:8761/eureka/
 
-
-  api-gateway:
-    image: andrejsuba/apigateway:latest
-    container_name: api-gateway
-    pull_policy: always
+  identity-service:
+    image: identity-service:latest
+    build:
+      context: .
+      dockerfile: ./identityService/Dockerfile
+    container_name: identity-service
+    depends_on:
+      - apigateway
     ports:
-      - "8181:8080"
-    expose:
-      - "8080"
+      - "8889:8889"
+    networks:
+      - microservice-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - discovery-server
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-mcs:8761/eureka/
+      SPRING_DATA_MONGODB_URI: mongodb+srv://mykyprykhodko:QByVvtSvWepPDwHf@umbeasylearn.syb9ryg.mongodb.net/pouzivatel?retryWrites=true&w=majority
 
-  ## Product-Service Docker Compose Config
-  subject-service:
-    container_name: subject-service
-    image: andrejsuba/subjectsms:latest
-    pull_policy: always
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+  user-mcs:
+    image: user-mcs:latest
+    build:
+      context: .
+      dockerfile: ./usermicroservice/Dockerfile
+    container_name: user-mcs
     depends_on:
-      - mongo
-      - discovery-server
-      - api-gateway
+      - discovery-mcs
+      - config-mcs
+      - apigateway
+    ports:
+      - "8989:8989"
+    networks:
+      - microservice-network
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-mcs:8761/eureka/
+      SPRING_DATA_MONGODB_URI: mongodb+srv://mykyprykhodko:QByVvtSvWepPDwHf@umbeasylearn.syb9ryg.mongodb.net/pouzivatel?retryWrites=true&w=majority
 
-  ## Order-Service Docker Compose Config
-  user-service:
-    container_name: user-service
-    image: andrejsuba/usermicroservice:latest
-    pull_policy: always
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+  subject-mcs:
+    image: subject-mcs:latest
+    build:
+      context: .
+      dockerfile: ./subjectsms/Dockerfile
+    container_name: subject-mcs
     depends_on:
-      - discovery-server
-      - api-gateway
+      - discovery-mcs
+      - config-mcs
+      - apigateway
+    ports:
+      - "8090:8090"
+    networks:
+      - microservice-network
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-mcs:8761/eureka/
+      SPRING_DATA_MONGODB_URI: mongodb+srv://mykyprykhodko:QByVvtSvWepPDwHf@umbeasylearn.syb9ryg.mongodb.net/Predmety?retryWrites=true&w=majority
+  frontend:
+    build:
+      context: ../UmbEasyLearn-fe
+      dockerfile: Dockerfile
+    container_name: angular-frontend
+    ports:
+      - "4200:80"  # Expose NGINX on port 4200
+    networks:
+      - microservice-network
 networks:
-  zipkin:
+  microservice-network:
     driver: bridge

@@ -2,4 +2,4 @@ spring:
   application:
     name: subjectsms
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://config-mcs:8888

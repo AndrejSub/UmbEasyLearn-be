@@ -1,7 +1,6 @@
 spring:
   data:
     mongodb:
-#      safe connection to demo database
       uri: mongodb+srv://mykyprykhodko:QByVvtSvWepPDwHf@umbeasylearn.syb9ryg.mongodb.net/
       database: Predmety
   application:
@@ -9,10 +8,10 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: subject-mcs
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-mcs:8761/eureka
 
 management:
   tracing:
@@ -21,4 +20,3 @@ management:
 
 server:
   port: 8090
-
