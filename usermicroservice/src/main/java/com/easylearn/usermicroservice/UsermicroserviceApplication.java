@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 //@enabledocuments
 public class UsermicroserviceApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        Thread.sleep(75000);
         SpringApplication.run(UsermicroserviceApplication.class, args);
     }
 
